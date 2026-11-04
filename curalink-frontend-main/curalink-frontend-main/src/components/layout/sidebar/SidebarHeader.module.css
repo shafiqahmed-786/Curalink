@@ -1,0 +1,84 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 12px 12px;
+  flex-shrink: 0;
+  gap: 4px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Collapsed: center the single expand icon */
+.headerCollapsed {
+  padding: 12px 0 8px;
+  justify-content: center;
+}
+
+/* ── "Chat" title button ── */
+.titleBtn {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.2px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.titleBtn:hover {
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-tertiary);
+}
+
+/* ── Icon buttons (search, X close, expand) ── */
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.iconBtn:hover {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+/* ── X close — mobile only ── */
+.closeBtn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .closeBtn {
+    display: flex;
+  }
+
+  /* Title not clickable on mobile — X handles close */
+  .titleBtn {
+    cursor: default;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,236 @@
+/* ── Token: collapsed icon-rail width (desktop only) ── */
+:root {
+  --sidebar-collapsed-width: 56px;
+}
+
+/* ─────────────────────────────────────────
+   BASE — desktop behaviour
+───────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100dvh;
+  background-color: var(--color-sidebar-bg);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition:
+    width var(--transition-normal),
+    background-color var(--transition-normal);
+  position: relative;
+  z-index: 20;
+}
+
+/* Desktop collapsed → icon rail */
+.sidebar.closed {
+  width: var(--sidebar-collapsed-width);
+}
+
+/* Hide text content when desktop-collapsed */
+.sidebar.closed .scrollArea,
+.sidebar.closed .searchWrap {
+  display: none;
+}
+
+/* ─────────────────────────────────────────
+   MOBILE — full-screen overlay drawer
+───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar {
+    /* Take it out of flow, sit above everything */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    width: var(--sidebar-width);
+    max-width: 85vw;          /* never wider than 85% of viewport */
+    z-index: 50;
+    box-shadow: var(--shadow-lg);
+
+    /* Start off-screen */
+    transform: translateX(-100%);
+    transition:
+      transform var(--transition-normal),
+      background-color var(--transition-normal);
+  }
+
+  /* Slide in when open */
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Keep closed state off-screen (override desktop closed width) */
+  .sidebar.closed {
+    width: var(--sidebar-width);
+    max-width: 85vw;
+    transform: translateX(-100%);
+  }
+
+  /* Always show full content on mobile (no icon-rail) */
+  .sidebar.closed .scrollArea,
+  .sidebar.closed .searchWrap {
+    display: block;
+  }
+}
+
+/* ─────────────────────────────────────────
+   BACKDROP — mobile only
+───────────────────────────────────────── */
+.backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 49;
+  animation: fadeIn 200ms ease forwards;
+}
+
+@media (max-width: 768px) {
+  .backdrop {
+    display: block;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─────────────────────────────────────────
+   INNER CONTENT
+───────────────────────────────────────── */
+.searchWrap {
+  flex-shrink: 0;
+  padding: 0 4px 4px;
+}
+
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 8px;
+}
+
+.empty {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 32px 16px;
+}
+
+/* ─────────────────────────────────────────
+   GUEST — current chat display
+───────────────────────────────────────── */
+.guestHistory {
+  padding: 8px 8px 0;
+}
+
+.guestHistoryLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  padding: 4px 8px 6px;
+  margin: 0;
+}
+
+.guestChatItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-tertiary);
+}
+
+.guestChatDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.guestChatTitle {
+  font-size: 13.5px;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.guestDivider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: 12px 8px 4px;
+}
+
+/* ─────────────────────────────────────────
+   AUTHENTICATED — current active chat
+───────────────────────────────────────── */
+.activeChat {
+  padding: 4px 8px 0;
+}
+
+.activeChatLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  padding: 8px 8px 4px;
+  margin: 0;
+}
+
+.activeChatItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.activeChatItem:hover {
+  background-color: var(--color-bg-tertiary);
+}
+
+.activeChatItemActive {
+  background-color: var(--color-bg-tertiary);
+}
+
+.activeChatDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.activeChatTitle {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}

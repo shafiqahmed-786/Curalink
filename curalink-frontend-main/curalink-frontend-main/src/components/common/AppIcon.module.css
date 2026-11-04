@@ -1,0 +1,18 @@
+.wrap {
+  background-color: #1a1a2e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme='dark'] .wrap {
+  background-color: #2d2d4e;
+}
+
+.wrap img {
+  object-fit: contain;
+  display: block;
+  /* Slight brightness boost so the flame pops on the dark bg */
+  filter: brightness(1.05);
+}
